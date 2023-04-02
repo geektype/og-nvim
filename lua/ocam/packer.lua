@@ -62,5 +62,8 @@ return require('packer').startup(function(use)
     use {
         "ray-x/lsp_signature.nvim",
     }
+
+    use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
+    use { "catppuccin/nvim", as = "catppuccin" }
 end)
 
