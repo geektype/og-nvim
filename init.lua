@@ -1,5 +1,6 @@
 require("ocam.remap")
 require("ocam.set")
+require("ocam.packer")
 
 -- disable netrw
 vim.g.loaded_netrw = 1
