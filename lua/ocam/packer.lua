@@ -1,18 +1,3 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
-local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-  return false
-end
-
-local packer_bootstrap = ensure_packer()
-
--- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
@@ -21,7 +6,6 @@ return require('packer').startup(function(use)
 
   use {
 	  'nvim-telescope/telescope.nvim', tag = '0.1.1',
-	  -- or                            , branch = '0.1.x',
 	  requires = { {'nvim-lua/plenary.nvim'} }
   }
   use({ 'rose-pine/neovim', as = 'rose-pine' })
@@ -31,7 +15,7 @@ return require('packer').startup(function(use)
   use {
 	  'nvim-tree/nvim-tree.lua',
 	  requires = {
-		  'nvim-tree/nvim-web-devicons', -- optional
+		  'nvim-tree/nvim-web-devicons',
 	  },
 	  config = function()
 		  require("nvim-tree").setup {}
@@ -42,20 +26,18 @@ return require('packer').startup(function(use)
       'VonHeikemen/lsp-zero.nvim',
       branch = 'v2.x',
       requires = {
-          -- LSP Support
-          {'neovim/nvim-lspconfig'},             -- Required
-          {                                      -- Optional
+          {'neovim/nvim-lspconfig'},
+          {
           'williamboman/mason.nvim',
           run = function()
               pcall(vim.cmd, 'MasonUpdate')
           end,
       },
-      {'williamboman/mason-lspconfig.nvim'}, -- Optional
+      {'williamboman/mason-lspconfig.nvim'},
 
-      -- Autocompletion
-      {'hrsh7th/nvim-cmp'},     -- Required
-      {'hrsh7th/cmp-nvim-lsp'}, -- Required
-      {'L3MON4D3/LuaSnip'},     -- Required
+      {'hrsh7th/nvim-cmp'},
+      {'hrsh7th/cmp-nvim-lsp'},
+      {'L3MON4D3/LuaSnip'},
   }
     }
     use {
@@ -75,8 +57,5 @@ return require('packer').startup(function(use)
 
     use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
     use { "catppuccin/nvim", as = "catppuccin" }
-    if packer_bootstrap then
-        require('packer').sync()
-    end
 end)
 
