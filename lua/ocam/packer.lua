@@ -1,4 +1,24 @@
-vim.cmd [[packadd packer.nvim]]
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    print("installed")
+    return true
+  end
+  print("no need")
+  return false
+end
+
+local packer_bootstrap = ensure_packer()
+
+
+-- Use a protected call so we don't error out on first use
+local status_ok, packer = pcall(require, "packer")
+if not status_ok then
+  return
+end
 
 return require('packer').startup(function(use)
   -- Packer can manage itself
@@ -57,5 +77,8 @@ return require('packer').startup(function(use)
 
     use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
     use { "catppuccin/nvim", as = "catppuccin" }
+    if packer_bootstrap then
+        require('packer').sync()
+    end
 end)
 
